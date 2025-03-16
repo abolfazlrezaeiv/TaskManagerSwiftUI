@@ -9,12 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     @State var tasks : [String] = ["Buy groceries", "Go for a walk"]
+    @State var isAddingTask = false
     
     var body: some View {
         NavigationView {
             List(tasks,id:\.self) {task in
                 Text(task)
             }.navigationTitle("Tasks")
+            .toolbar {
+                Button(action:{
+                    isAddingTask = true
+                }){
+                    Image(systemName: "plus")
+                }
+            }
+            .sheet(isPresented: $isAddingTask) {
+                AddTaskView(tasks: $tasks)
+            }
         }
     }
 }
