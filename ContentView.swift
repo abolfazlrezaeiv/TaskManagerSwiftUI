@@ -13,8 +13,13 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List(tasks,id:\.self) {task in
-                Text(task)
+            List {
+                    ForEach(tasks.indices,id: \.self) { index in
+                        NavigationLink(destination: TaskDetailView(task: $tasks[index])) {
+                            Text(tasks[index])
+                        }
+                    }
+                
             }.navigationTitle("Tasks")
             .toolbar {
                 Button(action:{
